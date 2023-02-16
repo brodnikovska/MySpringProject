@@ -1,4 +1,4 @@
-package model;
+package org.example.model;
 
 /**
  * Created by maksym_govorischev on 14/03/14.
