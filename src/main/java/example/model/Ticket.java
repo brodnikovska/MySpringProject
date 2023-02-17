@@ -1,14 +1,14 @@
-package org.example.service;
+package example.model;
 
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.model.Ticket;
 
 @Getter
 @Setter
-public class TicketService implements Ticket {
+public class Ticket {
 
+    public enum Category {STANDARD, PREMIUM, BAR};
     @Column(unique=true)
     private long id;
     private long eventId;

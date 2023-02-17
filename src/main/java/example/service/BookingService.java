@@ -1,15 +1,14 @@
-package org.example.service;
+package example.service;
 
-import org.example.facade.BookingFacade;
-import org.example.model.Event;
-import org.example.model.Ticket;
-import org.example.model.User;
+import example.facade.BookingFacade;
+import example.model.Event;
+import example.model.Ticket;
+import example.model.User;
 
 import java.util.Date;
 import java.util.List;
 
 public class BookingService implements BookingFacade {
-
 
     @Override
     public Event getEventById() {

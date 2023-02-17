@@ -1,8 +1,8 @@
-package org.example.facade;
+package example.facade;
 
-import org.example.model.Event;
-import org.example.model.Ticket;
-import org.example.model.User;
+import example.model.Event;
+import example.model.Ticket;
+import example.model.User;
 
 import java.util.Date;
 import java.util.List;

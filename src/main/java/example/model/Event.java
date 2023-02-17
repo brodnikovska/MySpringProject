@@ -1,15 +1,14 @@
-package org.example.service;
+package example.model;
 
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.model.Event;
 
 import java.util.Date;
 
 @Getter
 @Setter
-public class EventService implements Event {
+public class Event {
 
     @Column(unique=true)
     private long id;

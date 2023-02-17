@@ -1,12 +1,15 @@
-package org.example.service;
+package example.model;
 
 import jakarta.persistence.Column;
-import lombok.*;
-import org.example.model.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-public class UserService implements User {
+@AllArgsConstructor
+public class User {
 
     @Column(unique=true)
     private long id;
