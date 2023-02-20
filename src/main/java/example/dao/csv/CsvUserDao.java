@@ -12,10 +12,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 @Setter
 @NoArgsConstructor
 @Component
+@Repository
 public class CsvUserDao implements UserDao {
 
     private Resource csvResource;

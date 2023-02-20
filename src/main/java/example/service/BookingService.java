@@ -4,14 +4,22 @@ import example.facade.BookingFacade;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class BookingService implements BookingFacade {
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public Event getEventById() {
+
         return null;
     }
 
@@ -40,34 +48,40 @@ public class BookingService implements BookingFacade {
         return false;
     }
 
+    @SneakyThrows
     @Override
-    public User getUserById() {
-        return null;
+    public User getUserById(long id){
+        return userService.getUserById(id);
     }
 
+    @SneakyThrows
     @Override
     public User getUserByEmail(String email) {
-        return null;
+        return userService.getUserByEmail(email);
     }
 
+    @SneakyThrows
     @Override
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return null;
+        return userService.getUsersByName(name, pageSize, pageNum);
     }
 
+    @SneakyThrows
     @Override
     public User createUser(User user) {
-        return null;
+        return userService.createUser(user);
     }
 
+    @SneakyThrows
     @Override
     public User updateUser(User user) {
-        return null;
+        return userService.updateUser(user);
     }
 
+    @SneakyThrows
     @Override
     public boolean deleteUser(long userId) {
-        return false;
+        return userService.deleteUser(userId);
     }
 
     @Override
