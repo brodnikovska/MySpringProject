@@ -8,10 +8,14 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 @Setter
+@NoArgsConstructor
+@Component
 public class CsvUserDao implements UserDao {
 
     private Resource csvResource;

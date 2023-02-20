@@ -5,8 +5,6 @@ import example.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.List;
-
 public class App 
 {
     public static void main( String[] args ) throws Exception {
@@ -15,6 +13,6 @@ public class App
         UserService userService =
                 (UserService) applicationContext.getBean("userService");
         User foundUser = userService.getUserByEmail("semen@i.ua");
-        System.out.println(foundUser.getName());
+        System.out.println(foundUser.getId() + " " + foundUser.getName());
     }
 }
