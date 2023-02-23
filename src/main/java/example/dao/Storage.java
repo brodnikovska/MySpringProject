@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -27,7 +29,7 @@ public class Storage {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 String dataKey = values[0];
-                String dataValue = values[1];
+                String dataValue = values[1].substring(1) + "," + values[2] + "," + values[3];
                 generalStorage.putIfAbsent(dataKey, dataValue);
             }
         } catch (IOException e) {
@@ -52,7 +54,19 @@ public class Storage {
     }
 
     public boolean isItemPresent (String id) {
-        return generalStorage.containsValue(id);
+        return generalStorage.containsKey(id);
+    }
+
+    public boolean isSomeDataPresent (String data) {
+        boolean isPresent = false;
+        List<String> storageValues = generalStorage.values().stream().toList();
+        for (String oneValue : storageValues) {
+            if (oneValue.toLowerCase().contains(data.toLowerCase())) {
+                isPresent = true;
+                break;
+            }
+        }
+        return isPresent;
     }
 
     public Map<String, String> getAllItems () {

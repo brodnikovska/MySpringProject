@@ -26,6 +26,7 @@ public class CsvUserDao implements UserDao {
     @Autowired
     private Storage storage;
     private static final String ID = "\"user:%s\"";
+    private static final String EMAIL = "\"email\":\"%s\"";
 
     @SneakyThrows
     @Override
@@ -45,6 +46,12 @@ public class CsvUserDao implements UserDao {
     @Override
     public User createUser(User user) {
         String newItem = new ObjectMapper().writeValueAsString(user);
+        if (storage.isItemPresent(String.format(ID, user.getId()))) {
+            throw new Exception(String.format("User with id %d is already present", user.getId()));
+        }
+        if (storage.isSomeDataPresent(String.format(EMAIL, user.getEmail()))) {
+            throw new Exception(String.format("User with email %s is already present", user.getEmail()));
+        }
         storage.putItem(String.format(ID, user.getId()), newItem);
         return user;
     }

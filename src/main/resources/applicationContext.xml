@@ -13,7 +13,6 @@
 
     <bean id="storage"
           class="example.dao.Storage" init-method="init">
-<!--        <property name="storage" value="usersmap.json"/>-->
     </bean>
 
 </beans>

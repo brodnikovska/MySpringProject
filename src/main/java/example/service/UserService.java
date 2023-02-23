@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Setter
 @NoArgsConstructor
@@ -17,10 +18,10 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public User getUserById(long id) {
+    public User getUserById(long id) throws NoSuchElementException {
         return userDao
                 .getUserById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException(String.format("No user with id %d is present", id)));
     }
 
 
