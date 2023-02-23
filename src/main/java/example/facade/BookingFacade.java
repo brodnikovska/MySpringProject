@@ -6,6 +6,7 @@ import example.model.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Groups together all operations related to tickets booking.
@@ -70,6 +71,7 @@ public interface BookingFacade {
 
     /**
      * Gets user by its email. Email is strictly matched.
+     *
      * @return User.
      */
     User getUserByEmail(String email);

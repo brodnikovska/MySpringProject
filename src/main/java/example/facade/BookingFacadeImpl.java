@@ -1,9 +1,12 @@
-package example.service;
+package example.facade;
 
 import example.facade.BookingFacade;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import example.service.UserService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +15,16 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class BookingService implements BookingFacade {
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
     private UserService userService;
+//    @Autowired
+//    private TicketService ticketService;
+//    @Autowired
+//    private EventService eventService;
 
     @Override
     public Event getEventById() {
