@@ -11,8 +11,4 @@
 
     <context:component-scan base-package="example"/>
 
-    <bean id="storage"
-          class="example.dao.Storage" init-method="init">
-    </bean>
-
 </beans>

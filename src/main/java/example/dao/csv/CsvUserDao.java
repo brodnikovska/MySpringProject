@@ -3,6 +3,7 @@ package example.dao.csv;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.dao.Storage;
 import example.dao.UserDao;
+import example.exception.DuplicateException;
 import example.model.User;
 
 import java.util.ArrayList;
@@ -10,13 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Setter
 @NoArgsConstructor
@@ -27,6 +26,10 @@ public class CsvUserDao implements UserDao {
     private Storage storage;
     private static final String ID = "\"user:%s\"";
     private static final String EMAIL = "\"email\":\"%s\"";
+
+    private String formatUserKey(User user) {
+        return String.format(ID, user.getId());
+    }
 
     @SneakyThrows
     @Override
@@ -46,13 +49,13 @@ public class CsvUserDao implements UserDao {
     @Override
     public User createUser(User user) {
         String newItem = new ObjectMapper().writeValueAsString(user);
-        if (storage.isItemPresent(String.format(ID, user.getId()))) {
-            throw new Exception(String.format("User with id %d is already present", user.getId()));
+        if (storage.isItemPresent(formatUserKey(user))) {
+            throw new DuplicateException(String.valueOf(user.getId()));
         }
         if (storage.isSomeDataPresent(String.format(EMAIL, user.getEmail()))) {
-            throw new Exception(String.format("User with email %s is already present", user.getEmail()));
+            throw new DuplicateException(user.getEmail());
         }
-        storage.putItem(String.format(ID, user.getId()), newItem);
+        storage.putItem(formatUserKey(user), newItem);
         return user;
     }
 
@@ -66,8 +69,8 @@ public class CsvUserDao implements UserDao {
     @Override
     public User updateUser(User user) {
         String newItem = new ObjectMapper().writeValueAsString(user);
-        if (storage.isItemPresent(String.format(ID, user.getId()))) {
-            storage.updateItem(String.format(ID, user.getId()), newItem);
+        if (storage.isItemPresent(formatUserKey(user))) {
+            storage.updateItem(formatUserKey(user), newItem);
         }
         return user;
     }

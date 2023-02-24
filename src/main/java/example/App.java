@@ -14,7 +14,7 @@ public class App
                 (BookingFacadeImpl) applicationContext.getBean("bookingFacadeImpl");
         User stepan = new User(12345, "Stepan", "Stepan@email");
         User ostap = new User(333, "Ostap", "ostap@email");
-        User ivan = new User(44, "Ivan", "anton@i.ua");
+        User ivan = new User(444, "Ivan", "KatRin@i.ua");
         bookingFacadeImpl.createUser(stepan);
         bookingFacadeImpl.createUser(ostap);
         bookingFacadeImpl.createUser(ivan);
