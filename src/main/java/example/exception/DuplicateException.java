@@ -11,6 +11,6 @@ public class DuplicateException extends Exception {
 
     @Override
     public String getMessage() {
-        return "User with "+ duplicate +" is already present.";
+        return "Item with "+ duplicate +" is already present.";
     }
 }

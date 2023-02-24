@@ -18,6 +18,18 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    public User createUser(User user) {
+        return userDao.createUser(user);
+    }
+
+    public User updateUser(User user) {
+        return userDao.updateUser(user);
+    }
+
+    public boolean deleteUser(long userId) {
+        return userDao.deleteUser(userId);
+    }
+
     public User getUserById(long id) throws NoSuchElementException {
         return userDao
                 .getUserById(id)
@@ -32,18 +44,4 @@ public class UserService {
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
         return userDao.getUsersByName(name);
     }
-
-    public User createUser(User user) {
-        return userDao.createUser(user);
-    }
-
-    public User updateUser(User user) {
-        return userDao.updateUser(user);
-    }
-
-    public boolean deleteUser(long userId) {
-        return userDao.deleteUser(userId);
-    }
-
-
 }

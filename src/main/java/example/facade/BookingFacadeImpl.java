@@ -1,9 +1,9 @@
 package example.facade;
 
-import example.facade.BookingFacade;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import example.service.EventService;
 import example.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,8 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,38 +25,37 @@ public class BookingFacadeImpl implements BookingFacade {
     private UserService userService;
 //    @Autowired
 //    private TicketService ticketService;
-//    @Autowired
-//    private EventService eventService;
+    @Autowired
+    private EventService eventService;
 
     @Override
-    public Event getEventById() {
-
-        return null;
+    public Event getEventById(long id) {
+        return eventService.getEventById(id);
     }
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return null;
+        return eventService.getEventsByTitle(title);
     }
 
     @Override
-    public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return null;
+    public List<Event> getEventsForDay(OffsetDateTime localDateTime, int pageSize, int pageNum) {
+        return eventService.getEventsForDay(localDateTime);
     }
 
     @Override
     public Event createEvent(Event event) {
-        return null;
+        return eventService.createEvent(event);
     }
 
     @Override
     public Event updateEvent(Event event) {
-        return null;
+        return eventService.updateEvent(event);
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return false;
+        return eventService.deleteEvent(eventId);
     }
 
     @SneakyThrows
