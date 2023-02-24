@@ -4,6 +4,7 @@ import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
 import example.service.EventService;
+import example.service.TicketService;
 import example.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,8 +22,8 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
     private UserService userService;
-//    @Autowired
-//    private TicketService ticketService;
+    @Autowired
+    private TicketService ticketService;
     @Autowired
     private EventService eventService;
 
@@ -96,21 +95,21 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        return null;
+        return ticketService.bookTicket(userId, eventId, place, category);
     }
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return null;
+        return ticketService.getBookedTickets(user);
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return null;
+        return ticketService.getBookedTickets(event);
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
-        return false;
+        return ticketService.cancelTicket(ticketId);
     }
 }

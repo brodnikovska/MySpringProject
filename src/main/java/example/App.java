@@ -2,6 +2,7 @@ package example;
 
 import example.model.Event;
 import example.facade.BookingFacadeImpl;
+import example.model.Ticket;
 import example.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -9,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.time.OffsetDateTime;
 
 import java.time.*;
+import java.util.List;
 
 public class App 
 {
@@ -33,5 +35,9 @@ public class App
         Event foundEvent = bookingFacadeImpl.getEventById(669);
         System.out.println(foundEvent.toString());
 
+        bookingFacadeImpl.bookTicket(444, 881, 11, Ticket.Category.BAR);
+        bookingFacadeImpl.bookTicket(444, 667, 12, Ticket.Category.BAR);
+        List<Ticket> foundTicket = bookingFacadeImpl.getBookedTickets(ivan, 10, 10);
+        foundTicket.stream().map(Object::toString).forEach(System.out::println);
     }
 }
