@@ -18,7 +18,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class UserServiceTest {
 
     @Mock
@@ -26,11 +25,6 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testCreateUser() {

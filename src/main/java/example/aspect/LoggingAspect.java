@@ -1,6 +1,7 @@
 package example.aspect;
 
 
+import lombok.SneakyThrows;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -21,15 +22,11 @@ public class LoggingAspect {
     @Pointcut("execution(* example.facade.*.*(..)) || @annotation(Loggable)")
     public void executeLogging(){}
 
+    @SneakyThrows
     @Around(value = "executeLogging()")
     public Object logMethodCall(ProceedingJoinPoint joinPoint) {
         long startTime = System.currentTimeMillis();
-        Object returnValue = null;
-        try {
-            returnValue = joinPoint.proceed();
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
+        Object returnValue = joinPoint.proceed();
         long totalTime = System.currentTimeMillis() - startTime;
         StringBuilder message = new StringBuilder("Method: ");
         message.append(joinPoint.getSignature().getName());

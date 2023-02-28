@@ -26,17 +26,8 @@ public class BookingFacadeTest {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
     private BookingFacadeImpl bookingFacadeImpl;
-
-    @Before
-    public void setUp() {
-        bookingFacadeImpl = (BookingFacadeImpl) applicationContext.getBean("bookingFacadeImpl");
-    }
-
-    @After
-    public void tearDown() {
-        bookingFacadeImpl = null;
-    }
 
     @Test
     public void testCancelTicket() {

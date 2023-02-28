@@ -25,7 +25,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class EventServiceTest {
 
     @Mock
@@ -33,11 +32,6 @@ public class EventServiceTest {
 
     @InjectMocks
     private EventService eventService;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testCreateEvent() {

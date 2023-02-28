@@ -22,7 +22,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class TicketServiceTest {
 
     @Mock
@@ -30,11 +29,6 @@ public class TicketServiceTest {
 
     @InjectMocks
     private TicketService ticketService;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testBookTicket() {

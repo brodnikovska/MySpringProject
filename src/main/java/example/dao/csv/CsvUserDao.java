@@ -97,30 +97,4 @@ public class CsvUserDao implements UserDao {
         List<User> allUsers = findAll();
         return allUsers.stream().filter(item -> item.getName().equalsIgnoreCase(name)).toList();
     }
-
-//    private Resource csvResource;
-//
-//    @Override
-//    public List<User> findAll(){
-//        List<User> results = new ArrayList<>();
-//        try (BufferedReader br = new BufferedReader(
-//                new FileReader(csvResource.getFile()))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                String[] fields = line.split(",");
-//
-//                long userId = Long.parseLong(fields[0]);
-//                String name = fields[1];
-//                String email = fields[2];
-//
-//                User user =
-//                        new User(userId, name, email);
-//                results.add(user);
-//            }
-//
-//        } catch (Exception exception) {
-//            exception.getMessage();
-//        }
-//        return results;
-//    }
 }
