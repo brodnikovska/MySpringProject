@@ -1,5 +1,6 @@
 package example.service;
 
+import example.aspect.Loggable;
 import example.model.User;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class UserService {
         return userDao.updateUser(user);
     }
 
+
     public boolean deleteUser(long userId) {
         return userDao.deleteUser(userId);
     }
@@ -36,12 +38,11 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchElementException(String.format("No user with id %d is present", id)));
     }
 
-
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email).orElseThrow();
     }
 
-    public List<User> getUsersByName(String name, int pageSize, int pageNum) {
+    public List<User> getUsersByName(String name) {
         return userDao.getUsersByName(name);
     }
 }

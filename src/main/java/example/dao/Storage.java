@@ -60,16 +60,11 @@ public class Storage {
     }
 
     public boolean isSomeDataPresent (String data) {
-        boolean isPresent = false;
-        List<String> storageValues = generalStorage.values().stream().toList();
-        for (String oneValue : storageValues) {
-            if (oneValue.toLowerCase().contains(data.toLowerCase())) {
-                isPresent = true;
-                break;
-            }
-        }
-        return isPresent;
+        return generalStorage.values()
+                .stream()
+                .anyMatch(value -> value.toLowerCase().contains(data.toLowerCase()));
     }
+
 
     public Map<String, String> getAllItems () {
         return generalStorage;

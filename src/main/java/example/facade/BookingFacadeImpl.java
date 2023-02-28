@@ -1,5 +1,6 @@
 package example.facade;
 
+import example.aspect.Loggable;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
@@ -8,7 +9,6 @@ import example.service.TicketService;
 import example.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,37 +57,31 @@ public class BookingFacadeImpl implements BookingFacade {
         return eventService.deleteEvent(eventId);
     }
 
-    @SneakyThrows
     @Override
     public User getUserById(long id){
         return userService.getUserById(id);
     }
 
-    @SneakyThrows
     @Override
     public User getUserByEmail(String email) {
         return userService.getUserByEmail(email);
     }
 
-    @SneakyThrows
     @Override
-    public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return userService.getUsersByName(name, pageSize, pageNum);
+    public List<User> getUsersByName(String name) {
+        return userService.getUsersByName(name);
     }
 
-    @SneakyThrows
     @Override
     public User createUser(User user) {
         return userService.createUser(user);
     }
 
-    @SneakyThrows
     @Override
     public User updateUser(User user) {
         return userService.updateUser(user);
     }
 
-    @SneakyThrows
     @Override
     public boolean deleteUser(long userId) {
         return userService.deleteUser(userId);
