@@ -1,9 +1,11 @@
-package facade;
+package example.facade;
 
-import model.Event;
-import model.Ticket;
-import model.User;
+import example.model.Event;
+import example.model.Ticket;
+import example.model.User;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +19,9 @@ public interface BookingFacade {
      * Gets event by its id.
      * @return Event.
      */
-    Event getEventById();
+//    Event getEventById();
+
+    Event getEventById(long id);
 
     /**
      * Get list of events by matching title. Title is matched using 'contains' approach.
@@ -37,7 +41,7 @@ public interface BookingFacade {
      * @param pageNum Pagination param. Number of the page to return. Starts from 1.
      * @return List of events.
      */
-    List<Event> getEventsForDay(Date day, int pageSize, int pageNum);
+    List<Event> getEventsForDay(OffsetDateTime localDateTime, int pageSize, int pageNum);
 
     /**
      * Creates new event. Event id should be auto-generated.
@@ -64,10 +68,13 @@ public interface BookingFacade {
      * Gets user by its id.
      * @return User.
      */
-    User getUserById();
+//    User getUserById();
+
+    User getUserById(long id);
 
     /**
      * Gets user by its email. Email is strictly matched.
+     *
      * @return User.
      */
     User getUserByEmail(String email);
@@ -80,7 +87,7 @@ public interface BookingFacade {
      * @param pageNum Pagination param. Number of the page to return. Starts from 1.
      * @return List of users.
      */
-    List<User> getUsersByName(String name, int pageSize, int pageNum);
+    List<User> getUsersByName(String name);
 
     /**
      * Creates new user. User id should be auto-generated.
