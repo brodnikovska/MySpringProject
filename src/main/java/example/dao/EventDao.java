@@ -1,18 +1,12 @@
 package example.dao;
 
 import example.model.Event;
-import example.model.User;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
 
-@Repository
-@Transactional
 public interface EventDao extends JpaRepository<Event, Long> {
 
     default Event update(Event event) {

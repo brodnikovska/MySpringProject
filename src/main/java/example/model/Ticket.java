@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -22,7 +23,6 @@ public class Ticket {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id")
-    @NotNull
     private User user;
 
     @ManyToOne(targetEntity = Event.class)

@@ -1,16 +1,10 @@
 package example;
 
-import example.model.Event;
 import example.facade.BookingFacadeImpl;
-import example.model.Ticket;
 import example.model.User;
+import example.service.impl.UserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.time.OffsetDateTime;
-
-import java.time.*;
-import java.util.List;
 
 public class App 
 {

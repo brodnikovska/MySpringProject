@@ -1,12 +1,11 @@
 package example.facade;
 
-import example.aspect.Loggable;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
-import example.service.EventService;
-import example.service.TicketService;
-import example.service.UserService;
+import example.service.impl.EventServiceImpl;
+import example.service.impl.TicketServiceImpl;
+import example.service.impl.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,91 +22,89 @@ import java.util.List;
 public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
-    private TicketService ticketService;
+    private TicketServiceImpl ticketServiceImpl;
     @Autowired
-    private EventService eventService;
+    private EventServiceImpl eventServiceImpl;
 
     @Override
     public Event getEventById(long id) {
-        return eventService.getEventById(id);
+        return eventServiceImpl.getEventById(id);
     }
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventService.getEventsByTitle(title);
+        return eventServiceImpl.getEventsByTitle(title, pageSize, pageNum);
     }
 
     @Override
     public List<Event> getEventsForDay(OffsetDateTime localDateTime, int pageSize, int pageNum) {
-        return eventService.getEventsForDay(localDateTime);
+        return eventServiceImpl.getEventsForDay(localDateTime, pageSize, pageNum);
     }
 
     @Override
     public Event createEvent(Event event) {
-        return eventService.createEvent(event);
+        return eventServiceImpl.createEvent(event);
     }
 
     @Override
     public Event updateEvent(Event event) {
-        return eventService.updateEvent(event);
+        return eventServiceImpl.updateEvent(event);
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return eventService.deleteEvent(eventId);
+        return eventServiceImpl.deleteEvent(eventId);
     }
 
     @Override
     public User getUserById(long id){
-        return userService.getUserById(id);
+        return userServiceImpl.getUserById(id);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userService.getUserByEmail(email);
+        return userServiceImpl.getUserByEmail(email);
     }
 
     @Override
     public List<User> getUsersByName(String name) {
-        return userService.getUsersByName(name);
+        return userServiceImpl.getUsersByName(name);
     }
 
     @Override
     public User createUser(User user) {
-        return userService.createUser(user);
+        return userServiceImpl.createUser(user);
     }
 
     @Override
     public User updateUser(User user) {
-        return userService.updateUser(user);
+        return userServiceImpl.updateUser(user);
     }
 
     @Override
     public boolean deleteUser(long userId) {
-        return userService.deleteUser(userId);
+        return userServiceImpl.deleteUser(userId);
     }
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        User user = userService.getUserById(userId);
-        Event event = eventService.getEventById(eventId);
-        return ticketService.bookTicket(user, event, place, category);
+        return ticketServiceImpl.bookTicket(userId, eventId, place, category);
     }
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(user);
+        return ticketServiceImpl.getBookedTickets(user, pageSize, pageNum);
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(event);
+        return ticketServiceImpl.getBookedTickets(event, pageSize, pageNum);
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
-        return ticketService.cancelTicket(ticketId);
+        return ticketServiceImpl.cancelTicket(ticketId);
     }
 }
