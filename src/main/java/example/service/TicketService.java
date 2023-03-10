@@ -4,6 +4,7 @@ import example.dao.TicketDao;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,21 @@ public class TicketService {
     @Autowired
     private TicketDao ticketDao;
 
-    public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        return ticketDao.bookTicket(userId, eventId, place, category);
+    public Ticket bookTicket(User user, Event event, int place, Ticket.Category category) {
+        Ticket ticket = new Ticket(user, event, place, category);
+        return ticketDao.save(ticket);
     }
 
     public boolean cancelTicket(long ticketId) {
-        return ticketDao.cancelTicket(ticketId);
+        ticketDao.deleteById(ticketId);
+        return true;
     }
 
     public List<Ticket> getBookedTickets(User user) {
-        return ticketDao.getBookedTickets(user);
+        return ticketDao.findByUserId(user.getId());
     }
 
     public List<Ticket> getBookedTickets(Event event) {
-        return ticketDao.getBookedTickets(event);
+        return ticketDao.findByEventId(event.getId());
     }
 }

@@ -7,6 +7,7 @@ import example.model.User;
 import example.service.EventService;
 import example.service.TicketService;
 import example.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
+@Transactional
 public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
@@ -89,7 +91,9 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        return ticketService.bookTicket(userId, eventId, place, category);
+        User user = userService.getUserById(userId);
+        Event event = eventService.getEventById(eventId);
+        return ticketService.bookTicket(user, event, place, category);
     }
 
     @Override

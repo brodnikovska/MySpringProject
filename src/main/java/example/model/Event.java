@@ -1,30 +1,29 @@
 package example.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import example.utils.CustomOffsetDateTimeSerializer;
-import example.utils.CustomOffsetDateTimeDeserializer;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "EVENTS")
 public class Event {
 
-    @JsonProperty("id")
+    @Id
+    @Column(unique = true, name = "event_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @JsonProperty("title")
+    @Column()
+    @NotNull
     private String title;
-    @JsonProperty("date")
-    @JsonSerialize(using = CustomOffsetDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomOffsetDateTimeDeserializer.class)
+    @Column()
+    @NotNull
     private OffsetDateTime date;
 
     @Override

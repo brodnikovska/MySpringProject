@@ -1,17 +1,14 @@
 package example.service;
 
 import example.dao.EventDao;
-import example.dao.UserDao;
 import example.model.Event;
-import example.model.User;
+import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -24,28 +21,29 @@ public class EventService {
     private EventDao eventDao;
 
     public Event createEvent(Event event) {
-        return eventDao.createEvent(event);
+        return eventDao.save(event);
     }
 
     public Event updateEvent (Event event) {
-        return eventDao.updateEvent(event);
+        return eventDao.update(event);
     }
 
     public boolean deleteEvent(long eventId) {
-        return eventDao.deleteEvent(eventId);
+        eventDao.deleteById(eventId);
+        return true;
     }
 
     public Event getEventById(long id) throws NoSuchElementException {
         return eventDao
-                .getEventById(id)
+                .findById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("No event with id %d is present", id)));
     }
 
     public List<Event> getEventsByTitle(String title) {
-        return eventDao.getEventsByTitle(title);
+        return eventDao.findByTitle(title);
     }
 
     public List<Event> getEventsForDay(OffsetDateTime localDateTime) {
-        return eventDao.getEventsForDay(localDateTime);
+        return eventDao.findByDate(localDateTime);
     }
 }
