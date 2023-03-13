@@ -13,15 +13,7 @@ public class App
                 new ClassPathXmlApplicationContext("applicationContext.xml");
         BookingFacadeImpl bookingFacadeImpl =
                 (BookingFacadeImpl) applicationContext.getBean("bookingFacadeImpl");
-        User stepan = new User("Stepan", "Stepan@email");
-        User ostap = new User("Ostap", "ostap@email");
-        User ivan = new User("Ivan", "ivan@email");
-        bookingFacadeImpl.createUser(stepan);
-        bookingFacadeImpl.createUser(ostap);
-        bookingFacadeImpl.createUser(ivan);
-        bookingFacadeImpl.deleteUser(ostap.getId());
-        bookingFacadeImpl.updateUser(new User("Sergii", "sergii@email"));
-        User foundUser = bookingFacadeImpl.getUserById(ivan.getId());
+        User foundUser = bookingFacadeImpl.getUserById(1);
         System.out.println(foundUser.toString());
 
 //        Event Karmen = new Event(881, "Karmen",OffsetDateTime.of(LocalDateTime.of(2023, 4, 4, 19, 0), ZoneOffset.UTC));

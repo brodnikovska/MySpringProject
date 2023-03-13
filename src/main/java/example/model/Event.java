@@ -17,7 +17,7 @@ public class Event {
 
     @Id
     @Column(unique = true, name = "event_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Column()
     @NotNull

@@ -44,18 +44,18 @@
                     <property name="generateDdl" value="true" />
                 </bean>
             </property>
-<!--            <property name="jpaProperties">-->
-<!--                <props>-->
-<!--                    <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
-<!--                    <prop key="hibernate.hbm2ddl.auto">update</prop>-->
-<!--                    <prop key="hibernate.show_sql">true</prop>-->
-<!--                </props>-->
-<!--            </property>-->
+            <property name="jpaProperties">
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                    <prop key="hibernate.hbm2ddl.auto">update</prop>
+                    <prop key="hibernate.show_sql">true</prop>
+                </props>
+            </property>
         </bean>
 
-        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource"/>
-        </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
 
 </beans>

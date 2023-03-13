@@ -18,7 +18,7 @@ public class Ticket {
     public enum Category {STANDARD, PREMIUM, BAR};
     @Id
     @Column(unique = true, name = "ticket_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne(targetEntity = User.class)
