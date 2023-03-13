@@ -21,11 +21,10 @@ import java.util.List;
 @Transactional
 public class BookingFacadeImpl implements BookingFacade {
 
-    @Autowired
     private UserServiceImpl userServiceImpl;
-    @Autowired
+
     private TicketServiceImpl ticketServiceImpl;
-    @Autowired
+
     private EventServiceImpl eventServiceImpl;
 
     @Override
