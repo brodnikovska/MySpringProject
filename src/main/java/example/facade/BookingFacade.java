@@ -3,10 +3,10 @@ package example.facade;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import example.model.UserAccount;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -145,5 +145,13 @@ public interface BookingFacade {
      * @return Flag whether anything has been canceled.
      */
     boolean cancelTicket(long ticketId);
+    UserAccount getUserAccountByUser(User user);
 
+    BigDecimal getAmountOfMoney(long userId);
+
+    BigDecimal putMoneyToAccount(long userId, BigDecimal money);
+
+    BigDecimal withdrawMoney(long userId, BigDecimal money);
+
+    UserAccount createUserAccount(UserAccount userAccount);
 }

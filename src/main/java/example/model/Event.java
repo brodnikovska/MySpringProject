@@ -1,31 +1,41 @@
 package example.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import example.utils.CustomOffsetDateTimeSerializer;
-import example.utils.CustomOffsetDateTimeDeserializer;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "EVENTS")
 public class Event {
 
-    @JsonProperty("id")
+    @Id
+    @Column(unique = true, name = "event_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @JsonProperty("title")
+    @Column()
+    @NotNull
     private String title;
-    @JsonProperty("date")
-    @JsonSerialize(using = CustomOffsetDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomOffsetDateTimeDeserializer.class)
+    @Column()
+    @NotNull
     private OffsetDateTime date;
+
+    @Column()
+    @NotNull
+    private BigDecimal ticketPrice;
+
+    public Event(String title, OffsetDateTime date, BigDecimal ticketPrice) {
+        this.title = title;
+        this.date = date;
+        this.ticketPrice = ticketPrice;
+    }
 
     @Override
     public String toString() {
@@ -33,6 +43,7 @@ public class Event {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", date=" + date +
+                ", ticketPrice=" + ticketPrice +
                 '}';
     }
 }
