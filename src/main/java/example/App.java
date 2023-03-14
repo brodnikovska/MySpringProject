@@ -1,10 +1,18 @@
 package example;
 
 import example.facade.BookingFacadeImpl;
+import example.model.Event;
+import example.model.Ticket;
 import example.model.User;
+import example.model.UserAccount;
 import example.service.impl.UserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 public class App 
 {
@@ -13,17 +21,17 @@ public class App
                 new ClassPathXmlApplicationContext("applicationContext.xml");
         BookingFacadeImpl bookingFacadeImpl =
                 (BookingFacadeImpl) applicationContext.getBean("bookingFacadeImpl");
-        User foundUser = bookingFacadeImpl.getUserById(1);
-        System.out.println(foundUser.toString());
 
-//        Event Karmen = new Event(881, "Karmen",OffsetDateTime.of(LocalDateTime.of(2023, 4, 4, 19, 0), ZoneOffset.UTC));
-//        bookingFacadeImpl.createEvent(Karmen);
-//        Event foundEvent = bookingFacadeImpl.getEventById(669);
-//        System.out.println(foundEvent.toString());
-//
-//        bookingFacadeImpl.bookTicket(444, 881, 11, Ticket.Category.BAR);
-//        bookingFacadeImpl.bookTicket(444, 667, 12, Ticket.Category.BAR);
-//        List<Ticket> foundTicket = bookingFacadeImpl.getBookedTickets(ivan, 10, 10);
-//        foundTicket.stream().map(Object::toString).forEach(System.out::println);
+        User visitor = new User("John", "john18@email");
+        bookingFacadeImpl.createUser(visitor);
+        UserAccount johnsAccount= new UserAccount(visitor, new BigDecimal("2000"));
+        bookingFacadeImpl.createUserAccount(johnsAccount);
+        visitor.setUserAccount(johnsAccount);
+        bookingFacadeImpl.updateUser(visitor);
+
+        Event show = new Event("Requiem", OffsetDateTime.of(LocalDateTime.of(2023, 4, 10, 19, 0), ZoneOffset.UTC), new BigDecimal("2100"));
+        bookingFacadeImpl.createEvent(show);
+        Ticket ticket = bookingFacadeImpl.bookTicket(visitor.getId(), show.getId(), 12, Ticket.Category.BAR);
+        System.out.println(ticket.toString());
     }
 }

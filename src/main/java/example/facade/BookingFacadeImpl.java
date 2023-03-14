@@ -3,8 +3,10 @@ package example.facade;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import example.model.UserAccount;
 import example.service.impl.EventServiceImpl;
 import example.service.impl.TicketServiceImpl;
+import example.service.impl.UserAccountServiceImpl;
 import example.service.impl.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -29,6 +32,9 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
     private EventServiceImpl eventServiceImpl;
+
+    @Autowired
+    private UserAccountServiceImpl userAccountServiceImpl;
 
     @Override
     public Event getEventById(long id) {
@@ -108,5 +114,30 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     public boolean cancelTicket(long ticketId) {
         return ticketServiceImpl.cancelTicket(ticketId);
+    }
+
+    @Override
+    public UserAccount getUserAccountByUser(User user) {
+        return null;
+    }
+
+    @Override
+    public BigDecimal getAmountOfMoney(long userId) {
+        return userAccountServiceImpl.getAmountOfMoney(userId);
+    }
+
+    @Override
+    public BigDecimal putMoneyToAccount(long userId, BigDecimal money) {
+        return userAccountServiceImpl.putMoneyToAccount(userId, money);
+    }
+
+    @Override
+    public BigDecimal withdrawMoney(long userId, BigDecimal money) {
+        return userAccountServiceImpl.withdrawMoney(userId, money);
+    }
+
+    @Override
+    public UserAccount createUserAccount(UserAccount userAccount) {
+        return userAccountServiceImpl.createUserAccount(userAccount);
     }
 }

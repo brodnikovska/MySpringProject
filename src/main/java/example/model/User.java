@@ -7,13 +7,14 @@ import lombok.Setter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "USERS")
+@Table(name = "allusers")
 public class User {
 
     @Id
@@ -28,6 +29,10 @@ public class User {
     @Column(unique = true)
     @NotNull
     private String email;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_account_id")
+    private UserAccount userAccount;
 
     public User(String name, String email) {
         this.name = name;
