@@ -1,21 +1,18 @@
 package example.dao;
 
 import example.model.Event;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
-public interface EventDao extends JpaRepository<Event, Long> {
+public interface EventDao {
 
-    default Event update(Event event) {
-        if (findById(event.getId()).isPresent()) {
-            return save(event);
-        } else {
-            throw new EntityNotFoundException("User with id " + event.getId() + " does not exist");
-        }
-    }
-    List<Event> findByTitle(String title);
-    List<Event> findByDate(OffsetDateTime localDateTime);
+    List<Event> findAll() throws Exception;
+    Event createEvent(Event event);
+    Event updateEvent(Event event);
+    boolean deleteEvent(long eventId);
+    Optional<Event> getEventById(long id);
+    List<Event> getEventsByTitle(String title);
+    List<Event> getEventsForDay(OffsetDateTime localDateTime);
 }

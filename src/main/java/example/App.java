@@ -22,14 +22,14 @@ public class App
         BookingFacadeImpl bookingFacadeImpl =
                 (BookingFacadeImpl) applicationContext.getBean("bookingFacadeImpl");
 
-        User visitor = new User("John", "john18@email");
+        User visitor = new User("John", "john40email");
         bookingFacadeImpl.createUser(visitor);
-        UserAccount johnsAccount= new UserAccount(visitor, new BigDecimal("2000"));
+        UserAccount johnsAccount= new UserAccount(visitor, new BigDecimal("3000"));
         bookingFacadeImpl.createUserAccount(johnsAccount);
         visitor.setUserAccount(johnsAccount);
         bookingFacadeImpl.updateUser(visitor);
 
-        Event show = new Event("Requiem", OffsetDateTime.of(LocalDateTime.of(2023, 4, 10, 19, 0), ZoneOffset.UTC), new BigDecimal("2100"));
+        Event show = new Event("Spartacus18", OffsetDateTime.of(LocalDateTime.of(2023, 4, 10, 19, 0), ZoneOffset.UTC), new BigDecimal("1500"));
         bookingFacadeImpl.createEvent(show);
         Ticket ticket = bookingFacadeImpl.bookTicket(visitor.getId(), show.getId(), 12, Ticket.Category.BAR);
         System.out.println(ticket.toString());

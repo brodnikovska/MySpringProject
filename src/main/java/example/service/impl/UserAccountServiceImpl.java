@@ -1,9 +1,9 @@
 package example.service.impl;
 
-import example.dao.EventDao;
-import example.dao.TicketDao;
-import example.dao.UserAccountDao;
-import example.dao.UserDao;
+import example.dao.repository.EventRepository;
+import example.dao.repository.TicketRepository;
+import example.dao.repository.UserAccountRepository;
+import example.dao.repository.UserRepository;
 import example.model.User;
 import example.model.UserAccount;
 import example.service.UserAccountService;
@@ -18,37 +18,42 @@ import java.math.BigDecimal;
 public class UserAccountServiceImpl implements UserAccountService {
 
     @Inject
-    private TicketDao ticketDao;
+    private TicketRepository ticketRepository;
 
     @Inject
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Inject
-    private EventDao eventDao;
+    private EventRepository eventRepository;
 
     @Inject
-    private UserAccountDao userAccountDao;
+    private UserAccountRepository userAccountRepository;
 
     @Override
     public BigDecimal getAmountOfMoney(long userId) {
-        User user = userDao.findById(userId).orElseThrow();
-        return userAccountDao.getAmountOfMoney(user);
+        return userAccountRepository.findByUserId(userId).orElseThrow().getPrepaidMoney();
     }
 
     @Override
     public BigDecimal putMoneyToAccount(long userId, BigDecimal money) {
-        User user = userDao.findById(userId).orElseThrow();
-        return userAccountDao.putMoneyToAccount(user, money);
+        UserAccount userAccount = userAccountRepository.findByUserId(userId).orElseThrow();
+        BigDecimal newBalance = (userAccount.getPrepaidMoney()).add(money);
+        userAccount.setPrepaidMoney(newBalance);
+        userAccountRepository.save(userAccount);
+        return userAccountRepository.findByUserId(userId).orElseThrow().getPrepaidMoney();
     }
 
     @Override
     public BigDecimal withdrawMoney(long userId, BigDecimal money) {
-        User user = userDao.findById(userId).orElseThrow();
-        return userAccountDao.withdrawMoney(user, money);
+        UserAccount userAccount = userAccountRepository.findByUserId(userId).orElseThrow();
+        BigDecimal newBalance = (userAccount.getPrepaidMoney()).subtract(money);
+        userAccount.setPrepaidMoney(newBalance);
+        userAccountRepository.save(userAccount);
+        return userAccountRepository.findByUserId(userId).orElseThrow().getPrepaidMoney();
     }
 
     @Override
     public UserAccount createUserAccount(UserAccount userAccount) {
-        return userAccountDao.save(userAccount);
+        return userAccountRepository.save(userAccount);
     }
 }

@@ -1,9 +1,11 @@
 package example.service.impl;
 
-import example.dao.EventDao;
+import example.dao.repository.EventRepository;
 import example.model.Event;
 import example.service.EventService;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,39 +18,43 @@ import java.util.NoSuchElementException;
 public class EventServiceImpl implements EventService {
 
     @Inject
-    private EventDao eventDao;
+    private EventRepository eventRepository;
 
 
     @Override
     public Event getEventById(long id) {
-        return eventDao
+        return eventRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("No event with id %d is present", id)));
     }
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventDao.findByTitle(title);
+        return eventRepository.findByTitle(title);
     }
 
     @Override
     public List<Event> getEventsForDay(OffsetDateTime localDateTime, int pageSize, int pageNum) {
-        return eventDao.findByDate(localDateTime);
+        return eventRepository.findByDate(localDateTime);
     }
 
     @Override
     public Event createEvent(Event event) {
-        return eventDao.save(event);
+        return eventRepository.save(event);
     }
 
     @Override
     public Event updateEvent(Event event) {
-        return eventDao.update(event);
+        if (eventRepository.findById(event.getId()).isEmpty()) {
+            throw new JpaObjectRetrievalFailureException(new EntityNotFoundException("Event with id " + event.getId() + " does not exist"));
+        } else {
+            return eventRepository.save(event);
+        }
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        eventDao.deleteById(eventId);
+        eventRepository.deleteById(eventId);
         return true;
     }
 }

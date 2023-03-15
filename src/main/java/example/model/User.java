@@ -4,11 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-
 
 @Getter
 @Setter
@@ -18,16 +13,14 @@ import java.math.BigDecimal;
 public class User {
 
     @Id
-    @Column(unique = true, name = "user_id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Column()
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -5,19 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-import java.util.Optional;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "TICKETS")
+@Table(name = "tickets")
 public class Ticket {
 
     public enum Category {STANDARD, PREMIUM, BAR};
     @Id
-    @Column(unique = true, name = "ticket_id")
+    @Column(name = "ticket_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
@@ -27,13 +25,10 @@ public class Ticket {
 
     @ManyToOne(targetEntity = Event.class)
     @JoinColumn(name = "event_id")
-    @NotNull
     private Event event;
     @Column()
-    @NotNull
     private int place;
     @Column()
-    @NotNull
     private Category category;
 
     public Ticket(User user, Event event, int place, Category category) {

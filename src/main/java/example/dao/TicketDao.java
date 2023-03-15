@@ -1,12 +1,16 @@
 package example.dao;
 
+import example.model.Event;
 import example.model.Ticket;
-import org.springframework.data.jpa.repository.JpaRepository;
+import example.model.User;
 
 import java.util.List;
 
-public interface TicketDao extends JpaRepository<Ticket, Long> {
+public interface TicketDao {
 
-    List<Ticket> findByUserId(Long userId);
-    List<Ticket> findByEventId(Long eventId);
+    List<Ticket> findAll() throws Exception;
+    Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category);
+    List<Ticket> getBookedTickets(User user);
+    List<Ticket> getBookedTickets(Event event);
+    boolean cancelTicket(long ticketId);
 }
