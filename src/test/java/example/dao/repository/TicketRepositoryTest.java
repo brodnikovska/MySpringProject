@@ -11,9 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,7 +37,7 @@ public class TicketRepositoryTest {
         User user = new User();
         user.setName("User F");
         user.setEmail("User_F@email");
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         Event ballet = new Event();
         ballet.setTitle("Ballet F");
@@ -54,7 +52,7 @@ public class TicketRepositoryTest {
         ticket.setCategory(Ticket.Category.PREMIUM);
         ticketRepository.save(ticket);
 
-        Ticket foundTicket = ticketRepository.findByUserId(user.getId()).get(0);
+        Ticket foundTicket = ticketRepository.findByUserId(savedUser.getId()).get(0);
 
         assertEquals(ticket, foundTicket);
     }
@@ -70,7 +68,7 @@ public class TicketRepositoryTest {
         ballet.setTitle("Ballet H");
         ballet.setDate(OFFSET_DATE_TIME);
         ballet.setTicketPrice(TICKET_PRICE);
-        eventRepository.save(ballet);
+        Event savedEvent = eventRepository.save(ballet);
 
         Ticket ticket = new Ticket();
         ticket.setUser(user);
@@ -79,7 +77,7 @@ public class TicketRepositoryTest {
         ticket.setCategory(Ticket.Category.PREMIUM);
         ticketRepository.save(ticket);
 
-        Ticket foundTicket = ticketRepository.findByEventId(ballet.getId()).get(0);
+        Ticket foundTicket = ticketRepository.findByEventId(savedEvent.getId()).get(0);
 
         assertEquals(ticket, foundTicket);
     }
