@@ -145,7 +145,6 @@ public interface BookingFacade {
      * @return Flag whether anything has been canceled.
      */
     boolean cancelTicket(long ticketId);
-    UserAccount getUserAccountByUser(User user);
 
     BigDecimal getAmountOfMoney(long userId);
 

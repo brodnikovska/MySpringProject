@@ -12,4 +12,5 @@ public interface UserAccountService {
 
     BigDecimal withdrawMoney(long userId, BigDecimal money);
     UserAccount createUserAccount(UserAccount userAccount);
+    void deleteUserAccount(UserAccount userAccount);
 }

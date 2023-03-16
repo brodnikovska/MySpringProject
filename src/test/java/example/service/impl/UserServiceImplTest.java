@@ -2,6 +2,7 @@ package example.service.impl;
 
 import example.dao.repository.UserRepository;
 import example.model.User;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -59,7 +60,7 @@ public class UserServiceImplTest {
 
         try {
             userServiceImpl.updateUser(stepan);
-        } catch (JpaObjectRetrievalFailureException e) {
+        } catch (EntityNotFoundException e) {
             assertEquals("User with id 1 does not exist", e.getMessage());
         }
     }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "tickets")
+@Table(name = "ticket")
 public class Ticket {
 
     public enum Category {STANDARD, PREMIUM, BAR};

@@ -4,7 +4,6 @@ import example.dao.repository.EventRepository;
 import example.dao.repository.TicketRepository;
 import example.dao.repository.UserAccountRepository;
 import example.dao.repository.UserRepository;
-import example.model.User;
 import example.model.UserAccount;
 import example.service.UserAccountService;
 import jakarta.inject.Inject;
@@ -55,5 +54,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public UserAccount createUserAccount(UserAccount userAccount) {
         return userAccountRepository.save(userAccount);
+    }
+
+    @Override
+    public void deleteUserAccount(UserAccount userAccount) {
+        userAccountRepository.delete(userAccount);
     }
 }

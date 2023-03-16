@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
         if (userRepository.findById(user.getId()).isEmpty()) {
-            throw new JpaObjectRetrievalFailureException(new EntityNotFoundException("User with id " + user.getId() + " does not exist"));
+            throw new EntityNotFoundException("User with id " + user.getId() + " does not exist");
         } else {
             return userRepository.save(user);
         }

@@ -1,1 +1,0 @@
-CREATE TABLE mysql.users_seq (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id));

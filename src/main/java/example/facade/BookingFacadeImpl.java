@@ -4,10 +4,10 @@ import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
 import example.model.UserAccount;
-import example.service.impl.EventServiceImpl;
-import example.service.impl.TicketServiceImpl;
-import example.service.impl.UserAccountServiceImpl;
-import example.service.impl.UserServiceImpl;
+import example.service.EventService;
+import example.service.TicketService;
+import example.service.UserAccountService;
+import example.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -25,119 +25,114 @@ import java.util.List;
 public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
 
     @Autowired
-    private TicketServiceImpl ticketServiceImpl;
+    private TicketService ticketService;
 
     @Autowired
-    private EventServiceImpl eventServiceImpl;
+    private EventService eventService;
 
     @Autowired
-    private UserAccountServiceImpl userAccountServiceImpl;
+    private UserAccountService userAccountService;
 
     @Override
     public Event getEventById(long id) {
-        return eventServiceImpl.getEventById(id);
+        return eventService.getEventById(id);
     }
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventServiceImpl.getEventsByTitle(title, pageSize, pageNum);
+        return eventService.getEventsByTitle(title, pageSize, pageNum);
     }
 
     @Override
     public List<Event> getEventsForDay(OffsetDateTime localDateTime, int pageSize, int pageNum) {
-        return eventServiceImpl.getEventsForDay(localDateTime, pageSize, pageNum);
+        return eventService.getEventsForDay(localDateTime, pageSize, pageNum);
     }
 
     @Override
     public Event createEvent(Event event) {
-        return eventServiceImpl.createEvent(event);
+        return eventService.createEvent(event);
     }
 
     @Override
     public Event updateEvent(Event event) {
-        return eventServiceImpl.updateEvent(event);
+        return eventService.updateEvent(event);
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return eventServiceImpl.deleteEvent(eventId);
+        return eventService.deleteEvent(eventId);
     }
 
     @Override
     public User getUserById(long id){
-        return userServiceImpl.getUserById(id);
+        return userService.getUserById(id);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userServiceImpl.getUserByEmail(email);
+        return userService.getUserByEmail(email);
     }
 
     @Override
     public List<User> getUsersByName(String name) {
-        return userServiceImpl.getUsersByName(name);
+        return userService.getUsersByName(name);
     }
 
     @Override
     public User createUser(User user) {
-        return userServiceImpl.createUser(user);
+        return userService.createUser(user);
     }
 
     @Override
     public User updateUser(User user) {
-        return userServiceImpl.updateUser(user);
+        return userService.updateUser(user);
     }
 
     @Override
     public boolean deleteUser(long userId) {
-        return userServiceImpl.deleteUser(userId);
+        return userService.deleteUser(userId);
     }
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        return ticketServiceImpl.bookTicket(userId, eventId, place, category);
+        return ticketService.bookTicket(userId, eventId, place, category);
     }
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketServiceImpl.getBookedTickets(user, pageSize, pageNum);
+        return ticketService.getBookedTickets(user, pageSize, pageNum);
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketServiceImpl.getBookedTickets(event, pageSize, pageNum);
+        return ticketService.getBookedTickets(event, pageSize, pageNum);
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
-        return ticketServiceImpl.cancelTicket(ticketId);
-    }
-
-    @Override
-    public UserAccount getUserAccountByUser(User user) {
-        return null;
+        return ticketService.cancelTicket(ticketId);
     }
 
     @Override
     public BigDecimal getAmountOfMoney(long userId) {
-        return userAccountServiceImpl.getAmountOfMoney(userId);
+        return userAccountService.getAmountOfMoney(userId);
     }
 
     @Override
     public BigDecimal putMoneyToAccount(long userId, BigDecimal money) {
-        return userAccountServiceImpl.putMoneyToAccount(userId, money);
+        return userAccountService.putMoneyToAccount(userId, money);
     }
 
     @Override
     public BigDecimal withdrawMoney(long userId, BigDecimal money) {
-        return userAccountServiceImpl.withdrawMoney(userId, money);
+        return userAccountService.withdrawMoney(userId, money);
     }
 
     @Override
     public UserAccount createUserAccount(UserAccount userAccount) {
-        return userAccountServiceImpl.createUserAccount(userAccount);
+        return userAccountService.createUserAccount(userAccount);
     }
 }
