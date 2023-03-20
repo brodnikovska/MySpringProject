@@ -1,23 +1,36 @@
 package example.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "user")
 public class User {
 
-    @JsonProperty("id")
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @JsonProperty("name")
+
+    @Column(nullable = false)
     private String name;
-    @JsonProperty("email")
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_account_id")
+    private UserAccount userAccount;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 
     @Override
     public String toString() {

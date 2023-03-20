@@ -2,9 +2,7 @@ package example.dao;
 
 import example.model.Event;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

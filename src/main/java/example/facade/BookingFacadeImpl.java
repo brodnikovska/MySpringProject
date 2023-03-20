@@ -1,31 +1,40 @@
 package example.facade;
 
-import example.aspect.Loggable;
 import example.model.Event;
 import example.model.Ticket;
 import example.model.User;
+import example.model.UserAccount;
 import example.service.EventService;
 import example.service.TicketService;
+import example.service.UserAccountService;
 import example.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
+@Transactional
 public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private TicketService ticketService;
+
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private UserAccountService userAccountService;
 
     @Override
     public Event getEventById(long id) {
@@ -34,12 +43,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventService.getEventsByTitle(title);
+        return eventService.getEventsByTitle(title, pageSize, pageNum);
     }
 
     @Override
     public List<Event> getEventsForDay(OffsetDateTime localDateTime, int pageSize, int pageNum) {
-        return eventService.getEventsForDay(localDateTime);
+        return eventService.getEventsForDay(localDateTime, pageSize, pageNum);
     }
 
     @Override
@@ -94,16 +103,36 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(user);
+        return ticketService.getBookedTickets(user, pageSize, pageNum);
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketService.getBookedTickets(event);
+        return ticketService.getBookedTickets(event, pageSize, pageNum);
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
         return ticketService.cancelTicket(ticketId);
+    }
+
+    @Override
+    public BigDecimal getAmountOfMoney(long userId) {
+        return userAccountService.getAmountOfMoney(userId);
+    }
+
+    @Override
+    public BigDecimal putMoneyToAccount(long userId, BigDecimal money) {
+        return userAccountService.putMoneyToAccount(userId, money);
+    }
+
+    @Override
+    public BigDecimal withdrawMoney(long userId, BigDecimal money) {
+        return userAccountService.withdrawMoney(userId, money);
+    }
+
+    @Override
+    public UserAccount createUserAccount(UserAccount userAccount) {
+        return userAccountService.createUserAccount(userAccount);
     }
 }

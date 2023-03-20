@@ -3,7 +3,6 @@ package example.dao.csv;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.dao.Storage;
 import example.dao.TicketDao;
-import example.dao.UserDao;
 import example.exception.DuplicateException;
 import example.model.Event;
 import example.model.Ticket;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Setter
 @NoArgsConstructor
@@ -26,6 +24,13 @@ public class CsvTicketDao implements TicketDao {
 
     @Autowired
     private Storage storage;
+
+    @Autowired
+    private CsvUserDao csvUserDao;
+
+    @Autowired
+    private CsvEventDao csvEventDao;
+
     private static final String ID = "\"ticket:%s\"";
 
     private String formatTicketKey(Ticket ticket) {
@@ -49,7 +54,9 @@ public class CsvTicketDao implements TicketDao {
     @SneakyThrows
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        Ticket ticket = new Ticket(userId, eventId, place, category);
+        User user = csvUserDao.getUserById(userId).orElseThrow();
+        Event event = csvEventDao.getEventById(eventId).orElseThrow();
+        Ticket ticket = new Ticket(user, event, place, category);
         String newItem = new ObjectMapper().writeValueAsString(ticket);
         if (storage.isItemPresent(formatTicketKey((ticket)))) {
             throw new DuplicateException(String.valueOf(ticket.getId()));
@@ -68,13 +75,13 @@ public class CsvTicketDao implements TicketDao {
     @Override
     public List<Ticket> getBookedTickets(User user) {
         List<Ticket> allTickets = findAll();
-        return allTickets.stream().filter(item -> item.getUserId() == user.getId()).toList();
+        return allTickets.stream().filter(item -> item.getUser().getId() == user.getId()).toList();
     }
 
     @SneakyThrows
     @Override
     public List<Ticket> getBookedTickets(Event event) {
         List<Ticket> allTickets = findAll();
-        return allTickets.stream().filter(item -> item.getEventId() == event.getId()).toList();
+        return allTickets.stream().filter(item -> item.getEvent().getId() == event.getId()).toList();
     }
 }

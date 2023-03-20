@@ -1,45 +1,49 @@
 package example.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "ticket")
 public class Ticket {
 
-    private static int nextTicketId = 4;
-
     public enum Category {STANDARD, PREMIUM, BAR};
-    @JsonProperty("id")
+    @Id
+    @Column(name = "ticket_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-    @JsonProperty("userId")
-    private long userId;
-    @JsonProperty("eventId")
-    private long eventId;
-    @JsonProperty("place")
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(targetEntity = Event.class)
+    @JoinColumn(name = "event_id")
+    private Event event;
+    @Column()
     private int place;
-    @JsonProperty("category")
+    @Column()
     private Category category;
 
-    public Ticket(long userId, long eventId, int place, Category category) {
-        this.userId = userId;
-        this.eventId = eventId;
+    public Ticket(User user, Event event, int place, Category category) {
+        this.user = user;
+        this.event = event;
         this.place = place;
         this.category = category;
-        this.id = nextTicketId;
-        nextTicketId++;
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", eventId=" + eventId +
+                ", user=" + user +
+                ", event=" + event +
                 ", place=" + place +
                 ", category=" + category +
                 '}';
